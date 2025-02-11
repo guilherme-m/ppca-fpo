@@ -17,9 +17,14 @@ X = np.array([
     for j in range(n)
 ]).reshape((m, n))
 
-criar_restricoes(solver, X, A, D)
+Y = np.array([
+    solver.NumVar(0, 1, f"Y{i}")
+    for i in range(m)
+])
 
-solver.Maximize((A*X).sum())
+criar_restricoes(solver, X, Y, A, D)
+
+solver.Maximize((A*X).sum() + 0.1*Y.sum())
 
 res = solver.Solve()
 
@@ -30,3 +35,5 @@ X_val = np.array([
 if res == solver.OPTIMAL:
     print(f'Solução: {solver.Objective().Value()}')
     print('X = ', X_val)
+    print(f'{int(X_val.sum())} matrículas.' +
+          f'{(X_val.sum(axis=1) > 0).sum()} alunos matriculados')
