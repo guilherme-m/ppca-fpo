@@ -1,6 +1,6 @@
-disciplina;horario;limite
-FPO;sexta_8h;3
-BD;sexta_8h;3
-MD;sabado_8h;3
-BDM;sabado_14h;3
-NBSA;sexta_14h;3
+sexta_8hdisciplina,horario,limite
+FPO,sexta_8h,3
+BD,sexta_8h,3
+MD,sabado_8h,3
+BDM,sabado_14h,3
+NBSA,sexta_14h,3
