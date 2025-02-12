@@ -8,7 +8,17 @@ def obter_dados():
     
     alunos = df_A['aluno']
     
-    M = pd.read_csv('data/disciplinas.csv', 
+    D = pd.read_csv('data/disciplinas.csv', 
                     sep=',')
     
-    return A, M, alunos
+    D = D.set_index('disciplina', drop=True)
+    
+    disciplinas = df_A.columns[1:]
+    
+    D = D.loc[disciplinas,:]
+    
+    D['index'] = range(len(disciplinas))
+    
+    D = D.reset_index()
+    
+    return A, D, alunos
