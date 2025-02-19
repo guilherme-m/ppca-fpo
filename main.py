@@ -46,7 +46,8 @@ X_val = np.array([
 
 if res == solver.OPTIMAL:
     print(f'Solução: {solver.Objective().Value()}')
-    print('X = ', X_val)
+    for i, a in enumerate(X_val):
+        print(f'{alunos[i]} = {a.astype(np.int32)}')
     print(f'{int(X_val.sum())} matrículas aceitas de um total de ' +
           f'{(A>0).sum()}. ' +
           f'{(X_val.sum(axis=1) > 0).sum()} alunos matriculados')
