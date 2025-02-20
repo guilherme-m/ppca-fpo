@@ -4,8 +4,8 @@ def obter_dados():
     # dados de matrículas
     df_A = pd.read_csv('data/matriculas.csv', sep=',')
     
-    # colunas de escolha de materias (substitui valores 0 por -999)
-    A = df_A.iloc[:, 1:].replace(0, -999).to_numpy()
+    # colunas de escolha de materias
+    M = df_A.iloc[:, 1:].to_numpy()
     
     # separa a coluna aluno
     alunos = df_A['aluno']
@@ -24,4 +24,4 @@ def obter_dados():
     D['index'] = range(len(disciplinas))
     D = D.reset_index()
 
-    return A, D, alunos
+    return M, D, alunos

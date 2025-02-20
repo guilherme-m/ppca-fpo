@@ -13,18 +13,24 @@ Parâmetros:
         - 'index': índice numérico de cada disciplina
 """
 
-def criar_restricoes(solver, X, Y, D):
+def criar_restricoes(solver, X, Y, D, M):
+    num_alunos, num_disciplinas = X.shape
+    
     # 1) restrição de limite de vagas por disciplina
-    for j in range(X.shape[1]):
+    for j in range(num_disciplinas):
         solver.Add(X[:, j].sum() <= D['limite'][j])
     
     # 2) Maximização do número de alunos matriculados
-    #TODO segunda maximização?
-    for i in range(X.shape[0]):
+    for i in range(num_alunos):
         solver.Add(Y[i] <= X[i, :].sum())
     
     # 3) restrição de conflito de horários
     for g, df in D.groupby('horario'):
         if len(df) > 1:
-            for i in range(X.shape[0]):
+            for i in range(num_alunos):
                 solver.Add(X[i, df['index']].sum() <= 1)
+                
+    # 4) aluno não pode ser matriculado em matéria que não solicitou
+    for i in range(num_alunos):
+        for j in range(num_disciplinas):
+            solver.Add(X[i, j] <= M[i, j])

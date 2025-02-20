@@ -8,10 +8,10 @@ solver = pywraplp.Solver('solver matriculas',
                          pywraplp.Solver.GLOP_LINEAR_PROGRAMMING)
 
 # obter dados de matrículas (A), disciplinas (D) e lista de alunos
-A, D, alunos = obter_dados()
+M, D, alunos = obter_dados()
 
 # definir matriz de variáveis de decisão X (m x n)
-m, n = A.shape # dimensões: m = alunos, n = disciplinas
+m, n = M.shape # dimensões: m = alunos, n = disciplinas
 
 # X[i][j]: se o aluno i se matricula (1) ou não (0) na disciplina j
 X = np.array([
@@ -28,12 +28,12 @@ Y = np.array([
 ])
 
 # passar restrições do problema para o solver
-criar_restricoes(solver, X, Y, D)
+criar_restricoes(solver, X, Y, D, M)
 
 # definir função objetivo para maximizar
 # soma total das matrículas efetivadas (A * X)
 # peso de 0.1 para a soma das variáveis Y, incentivando a matrícula de alunos
-solver.Maximize((A*X).sum() + 0.1*Y.sum())
+solver.Maximize((M*X).sum() + 0.1*Y.sum())
 
 # resolver
 res = solver.Solve()
@@ -49,5 +49,5 @@ if res == solver.OPTIMAL:
     for i, a in enumerate(X_val):
         print(f'{alunos[i]} = {a.astype(np.int32)}')
     print(f'{int(X_val.sum())} matrículas aceitas de um total de ' +
-          f'{(A>0).sum()}. ' +
+          f'{(M>0).sum()}. ' +
           f'{(X_val.sum(axis=1) > 0).sum()} alunos matriculados')
