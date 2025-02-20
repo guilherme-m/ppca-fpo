@@ -1,6 +1,10 @@
 import pandas as pd
 
 def obter_dados():
+    '''
+    Função responsável por tratar os dados de entrada
+    '''
+    
     # dados de matrículas
     df_A = pd.read_csv('data/matriculas.csv', sep=',')
     
