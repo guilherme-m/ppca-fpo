@@ -26,6 +26,6 @@ def obter_dados():
     
     # cria coluna 'index'
     D['index'] = range(len(disciplinas))
-    D = D.reset_index()
+    D = D.reset_index(names='disciplina')
 
     return M, D, alunos

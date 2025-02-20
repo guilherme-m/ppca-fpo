@@ -47,7 +47,9 @@ X_val = np.array([
 if res == solver.OPTIMAL:
     print(f'Solução: {solver.Objective().Value()}')
     for i, a in enumerate(X_val):
-        print(f'{alunos[i]} = {a.astype(np.int32)}')
+        disciplinas_aceitas = D.loc[(a.astype(np.int32) > 0), 'disciplina'].tolist()
+        print(f'{alunos[i]} = {disciplinas_aceitas}')
     print(f'{int(X_val.sum())} matrículas aceitas de um total de ' +
           f'{(M>0).sum()}. ' +
-          f'{(X_val.sum(axis=1) > 0).sum()} alunos matriculados')
+          f'{(X_val.sum(axis=1) > 0).sum()} alunos matriculados de '  +
+          f'um total de {X_val.shape[0]}.')
